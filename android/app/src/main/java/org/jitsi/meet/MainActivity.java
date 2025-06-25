@@ -53,8 +53,7 @@ public class MainActivity extends JitsiMeetActivity {
      * The request code identifying requests for the permission to draw on top
      * of other apps. The value must be 16-bit and is arbitrarily chosen here.
      */
-    private static final int OVERLAY_PERMISSION_REQUEST_CODE
-        = (int) (Math.random() * Short.MAX_VALUE);
+    private static final int OVERLAY_PERMISSION_REQUEST_CODE = (int) (Math.random() * Short.MAX_VALUE);
 
     /**
      * ServerURL configuration key for restriction configuration using {@link android.content.RestrictionsManager}
@@ -91,7 +90,7 @@ public class MainActivity extends JitsiMeetActivity {
 
     @Override
     protected boolean extraInitialize() {
-        Log.d(this.getClass().getSimpleName(), "LIBRE_BUILD="+BuildConfig.LIBRE_BUILD);
+        Log.d(this.getClass().getSimpleName(), "LIBRE_BUILD=" + BuildConfig.LIBRE_BUILD);
 
         // Setup Crashlytics and Firebase Dynamic Links
         // Here we are using reflection since it may have been disabled at compile time.
@@ -107,10 +106,7 @@ public class MainActivity extends JitsiMeetActivity {
         // order to display the warning and error overlays.
         if (BuildConfig.DEBUG) {
             if (!Settings.canDrawOverlays(this)) {
-                Intent intent
-                    = new Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 
                 startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE);
 
@@ -132,8 +128,7 @@ public class MainActivity extends JitsiMeetActivity {
                 recreate();
             }
         };
-        registerReceiver(broadcastReceiver,
-            new IntentFilter(Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED));
+        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED));
 
         resolveRestrictions();
         setJitsiMeetConferenceDefaultOptions();
@@ -153,30 +148,22 @@ public class MainActivity extends JitsiMeetActivity {
     private void setJitsiMeetConferenceDefaultOptions() {
 
         // Set default options
-        JitsiMeetConferenceOptions defaultOptions
-            = new JitsiMeetConferenceOptions.Builder()
-            .setServerURL(buildURL(defaultURL))
-            .setFeatureFlag("welcomepage.enabled", true)
-            .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
-            .build();
+        JitsiMeetConferenceOptions defaultOptions = new JitsiMeetConferenceOptions.Builder().setServerURL(buildURL(defaultURL)).setFeatureFlag("welcomepage.enabled", true).setFeatureFlag("server-url-change.enabled", !configurationByRestrictions).build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
     }
 
     private void resolveRestrictions() {
-        RestrictionsManager manager =
-            (RestrictionsManager) getSystemService(Context.RESTRICTIONS_SERVICE);
+        RestrictionsManager manager = (RestrictionsManager) getSystemService(Context.RESTRICTIONS_SERVICE);
         Bundle restrictions = manager.getApplicationRestrictions();
-        Collection<RestrictionEntry> entries = manager.getManifestRestrictions(
-            getApplicationContext().getPackageName());
+        Collection<RestrictionEntry> entries = manager.getManifestRestrictions(getApplicationContext().getPackageName());
         for (RestrictionEntry restrictionEntry : entries) {
             String key = restrictionEntry.getKey();
             if (RESTRICTION_SERVER_URL.equals(key)) {
                 // If restrictions are passed to the application.
-                if (restrictions != null &&
-                    restrictions.containsKey(RESTRICTION_SERVER_URL)) {
+                if (restrictions != null && restrictions.containsKey(RESTRICTION_SERVER_URL)) {
                     defaultURL = restrictions.getString(RESTRICTION_SERVER_URL);
                     configurationByRestrictions = true;
-                // Otherwise use default URL from app-restrictions.xml.
+                    // Otherwise use default URL from app-restrictions.xml.
                 } else {
                     defaultURL = restrictionEntry.getSelectedString();
                     configurationByRestrictions = false;

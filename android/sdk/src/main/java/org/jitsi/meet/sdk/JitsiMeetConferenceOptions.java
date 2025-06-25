@@ -165,6 +165,7 @@ public class JitsiMeetConferenceOptions implements Parcelable {
 
             return this;
         }
+
         /**
          * Indicates the conference will be joined with the camera muted.
          * @param videoMuted - Muted indication.

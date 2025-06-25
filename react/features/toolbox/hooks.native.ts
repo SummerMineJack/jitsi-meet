@@ -11,6 +11,7 @@ import HangupContainerButtons from './components/native/HangupContainerButtons';
 import OverflowMenuButton from './components/native/OverflowMenuButton';
 import ScreenSharingButton from './components/native/ScreenSharingButton';
 import VideoMuteButton from './components/native/VideoMuteButton';
+import SendButton from './components/native/SendButton';
 import { isDesktopShareButtonDisabled } from './functions.native';
 import { ICustomToolbarButton, IToolboxNativeButton, NativeToolbarButton } from './types';
 
@@ -62,6 +63,15 @@ const hangup = {
     Content: HangupContainerButtons,
     group: 3
 };
+
+const sendButton ={
+    key: 'sendButton',
+    Content: SendButton,
+    group: 0};
+
+function getSendButton() {
+    return sendButton;
+}
 
 /**
  * A hook that returns the audio mute button.
@@ -144,6 +154,7 @@ export function useNativeToolboxButtons(
     const screenSharingButton = getScreenSharingButton();
     const tileViewButton = getTileViewButton();
     const overflowMenuButton = getOverflowMenuButton();
+    const sendButtonMenuButton = getSendButton();
 
     const buttons: { [key in NativeToolbarButton]?: IToolboxNativeButton; } = {
         microphone: audioMuteButton,
@@ -153,6 +164,7 @@ export function useNativeToolboxButtons(
         raisehand,
         tileview: tileViewButton,
         overflowmenu: overflowMenuButton,
+        sendButton:sendButtonMenuButton,
         hangup
     };
     const buttonKeys = Object.keys(buttons) as NativeToolbarButton[];

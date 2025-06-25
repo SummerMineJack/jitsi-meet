@@ -46,8 +46,7 @@ import java.util.HashMap;
  * hooked to the React Native subsystem via proxy calls through the
  * {@code JitsiMeetActivityDelegate} static methods.
  */
-public class JitsiMeetActivity extends AppCompatActivity
-    implements JitsiMeetActivityInterface {
+public class JitsiMeetActivity extends AppCompatActivity implements JitsiMeetActivityInterface {
 
     protected static final String TAG = JitsiMeetActivity.class.getSimpleName();
 
@@ -82,8 +81,7 @@ public class JitsiMeetActivity extends AppCompatActivity
     }
 
     public static void launch(Context context, String url) {
-        JitsiMeetConferenceOptions options
-            = new JitsiMeetConferenceOptions.Builder().setRoom(url).build();
+        JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder().setRoom(url).build();
         launch(context, options);
     }
 
@@ -173,10 +171,7 @@ public class JitsiMeetActivity extends AppCompatActivity
     }
 
     public void join(@Nullable String url) {
-        JitsiMeetConferenceOptions options
-            = new JitsiMeetConferenceOptions.Builder()
-            .setRoom(url)
-            .build();
+        JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder().setRoom(url).build();
         join(options);
     }
 
@@ -196,8 +191,7 @@ public class JitsiMeetActivity extends AppCompatActivity
         }
     }
 
-    private @Nullable
-    JitsiMeetConferenceOptions getConferenceOptions(Intent intent) {
+    private @Nullable JitsiMeetConferenceOptions getConferenceOptions(Intent intent) {
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {

@@ -76,13 +76,13 @@ public class JitsiMeetView extends FrameLayout {
             String valueType = bValue.getClass().getSimpleName();
 
             if (valueType.contentEquals("Boolean")) {
-                result.putBoolean(key, (Boolean)bValue);
+                result.putBoolean(key, (Boolean) bValue);
             } else if (valueType.contentEquals("String")) {
-                result.putString(key, (String)bValue);
+                result.putString(key, (String) bValue);
             } else if (valueType.contentEquals("Integer")) {
-                result.putInt(key, (int)bValue);
+                result.putInt(key, (int) bValue);
             } else if (valueType.contentEquals("Bundle")) {
-                result.putBundle(key, mergeProps((Bundle)aValue, (Bundle)bValue));
+                result.putBundle(key, mergeProps((Bundle) aValue, (Bundle) bValue));
             } else {
                 throw new RuntimeException("Unsupported type: " + valueType);
             }
@@ -131,12 +131,8 @@ public class JitsiMeetView extends FrameLayout {
      * page.
      */
     public void enterPictureInPicture() {
-        PictureInPictureModule pipModule
-            = ReactInstanceManagerHolder.getNativeModule(
-                PictureInPictureModule.class);
-        if (pipModule != null
-                && pipModule.isPictureInPictureSupported()
-                && !JitsiMeetActivityDelegate.arePermissionsBeingRequested()) {
+        PictureInPictureModule pipModule = ReactInstanceManagerHolder.getNativeModule(PictureInPictureModule.class);
+        if (pipModule != null && pipModule.isPictureInPictureSupported() && !JitsiMeetActivityDelegate.arePermissionsBeingRequested()) {
             try {
                 pipModule.enterPictureInPicture();
             } catch (RuntimeException re) {
@@ -177,10 +173,7 @@ public class JitsiMeetView extends FrameLayout {
 
         if (reactRootView == null) {
             reactRootView = new ReactRootView(getContext());
-            reactRootView.startReactApplication(
-                ReactInstanceManagerHolder.getReactInstanceManager(),
-                appName,
-                props);
+            reactRootView.startReactApplication(ReactInstanceManagerHolder.getReactInstanceManager(), appName, props);
             reactRootView.setBackgroundColor(BACKGROUND_COLOR);
             addView(reactRootView);
         } else {
